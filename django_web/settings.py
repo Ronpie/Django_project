@@ -133,3 +133,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'blog-home'
 
 LOGIN_URL = 'login'
+
+#setting image folder to easy for brower to display
+# where upload file will be location on file system
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+#public url: to accesss it on the brower
+MEDIA_URL = '/media/'
