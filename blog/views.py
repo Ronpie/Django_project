@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.views.generic import (
 	ListView,
 	DetailView,
@@ -8,6 +8,7 @@ from django.views.generic import (
 	)
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.models import User
 #function home
 #handle traffic from homepage of our blog
 #take the request argument
@@ -30,7 +31,25 @@ class PostListView(ListView):
 	# we are setting the variable to pass in to html is 'posts'
 	context_object_name = 'posts'
 	# we want to see lasted post in the top. "-" reverse
-	ordering = ['-date_posted'] 
+	ordering = ['-date_posted']
+	paginate_by = 5
+
+class UserPostListView(ListView):
+	model = Post
+	# browser look for the template
+	# <app>/<model>_<viewtype>.html  default is -> blog/post_list.html
+	template_name = 'blog/user_posts.html'
+	# we are setting the variable to pass in to html is 'posts'
+	context_object_name = 'posts'
+	# we want to see lasted post in the top. "-" reverse
+	# when having get_query_set we don't need ordering
+	# ordering = ['-date_posted']
+	paginate_by = 5
+
+	def get_queryset(self):
+		#get username from url by self.kwargs.get('username')
+		user = get_object_or_404(User,username=self.kwargs.get('username'))
+		return Post.objects.filter(author=user).order_by('-date_posted')
 
 class PostDetailView(DetailView):
 	model = Post
