@@ -139,3 +139,12 @@ LOGIN_URL = 'login'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 #public url: to accesss it on the brower
 MEDIA_URL = '/media/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR,'sent_emails')
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAiL_PASS')
